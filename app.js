@@ -12,7 +12,8 @@ const optionBEl = document.querySelector('#option-b-title');
 const optionAVotesEl = document.querySelector('#option-a-votes');
 const optionBVotesEl = document.querySelector('#option-b-votes');
 
-const pastPollsEl = document.querySelector('#past-polls');
+const pastPollsEl = document.querySelector('.past-polls');
+// console.log(pastPollsEl);
 
 let question = '';
 let optionATitle = '';
@@ -49,9 +50,75 @@ form.addEventListener('submit', (e) => {
     optionATitle = pollData.get('option-a');
     optionBTitle = pollData.get('option-b');
 
+    displayCurrentPoll();
+    form.reset();
+});
+
+closePollBtn.addEventListener('click', () => {
+    
+    //save a copy of state(now the "past" poll) in a variable called poll
+    const poll = {
+        question,
+        optionATitle,
+        optionAVotes,
+        optionBTitle,
+        optionBVotes
+    };
+// console.log(poll);
+
+    // push that past poll to the pastPollsArr
+    pastPollsArr.push(poll);
+// console.log(pastPollsArr);
+
+    //reset the state (to make a new empty current poll) 
+    question = '';
+    optionATitle = '';
+    optionAVotes = 0;
+    optionBTitle = '';
+    optionBVotes = 0;
+
+    //displays the reset DOM from above 
     questionEl.textContent = question;
     optionAEl.textContent = optionATitle;
     optionBEl.textContent = optionBTitle;
-    
-    form.reset();
+    optionAVotesEl.textContent = optionAVotes;
+    optionBVotesEl.textContent = optionBVotes;
+
+    //display the past poll in the past poll section 
+    //first resetting the text content so no previous poll array shows
+    pastPollsEl.textContent = '';
+
+    //then loop through each poll in the pastPollArr and display the list
+    for (let pastPoll of pastPollsArr) {
+        const pastPollEl = document.createElement('div');
+        const pastQuestionEl = document.createElement('p');
+        const pastTitleAEl = document.createElement('p');
+        const pastTitleBEl = document.createElement('p');
+        const pastVotesAEl = document.createElement('p');
+        const pastVotesBEl = document.createElement('p');
+
+        pastPollEl.classList.add('past-poll-container');
+        pastQuestionEl.classList.add('past-poll-question');
+        pastTitleAEl.classList.add('past-poll-title-a');
+        pastTitleBEl.classList.add('past-poll-title-b');
+        pastVotesAEl.classList.add('past-poll-votes-a');
+        pastVotesBEl.classList.add('past-poll-votes-b');
+
+        pastQuestionEl.textContent = pastPoll.question;
+        pastTitleAEl.textContent = pastPoll.optionATitle;
+        pastTitleBEl.textContent = pastPoll.optionBTitle;
+        pastVotesAEl.textContent = pastPoll.optionAVotes;
+        pastVotesBEl.textContent = pastPoll.optionBVotes;
+
+        pastPollsEl.append(pastPollEl, pastQuestionEl, pastTitleAEl, pastTitleBEl, pastVotesAEl, pastVotesBEl);
+        console.log(pastPollEl);
+    }
 });
+
+function displayCurrentPoll() {
+    questionEl.textContent = question;
+    optionAEl.textContent = optionATitle;
+    optionBEl.textContent = optionBTitle;
+    optionAVotesEl.textContent = optionAVotes;
+    optionBVotesEl.textContent = optionBVotes;
+}
