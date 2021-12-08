@@ -128,14 +128,9 @@ label {
 .past-poll-question {
     margin: 5px;
 }
-.past-a-container {
+.past-container {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
 }
 
-.past-b-container {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-}
