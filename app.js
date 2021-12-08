@@ -103,9 +103,9 @@ function makePoll() {
 function resetState() {
     question = '';
     optionATitle = '';
-    optionAVotes = 0;
+    optionAVotes = '';
     optionBTitle = '';
-    optionBVotes = 0;
+    optionBVotes = '';
 }
 
 
